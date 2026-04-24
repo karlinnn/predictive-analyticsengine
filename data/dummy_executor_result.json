@@ -1,0 +1,20 @@
+{
+  "success": true,
+  "stdout": "{\"metrics\": {\"train_mae\": 0.96, \"test_mae\": 0.99, \"test_r2\": 0.24, \"test_rmse\": 1.21}, \"feature_importance\": {\"college gpa\": 0.67, \"high school gpa\": 0.24, \"ACT composite score\": 0.05, \"parental income\": 0.04}, \"explainability_summary\": \"Relative feature influence on the target, ranked by the provided importance scores.\"}\n",
+  "stderr": "",
+  "result_json": {
+    "metrics": {
+      "train_mae": 0.96,
+      "test_mae": 0.99,
+      "test_r2": 0.24,
+      "test_rmse": 1.21
+    },
+    "feature_importance": {
+      "college gpa": 0.67,
+      "high school gpa": 0.24,
+      "ACT composite score": 0.05,
+      "parental income": 0.04
+    },
+    "explainability_summary": "Relative feature influence on the target, ranked by the provided importance scores."
+  }
+}

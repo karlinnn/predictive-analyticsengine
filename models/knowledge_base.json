@@ -1,0 +1,191 @@
+{
+  "models": [
+    {
+      "model_name": "GradientBoostedTrees",
+      "task_types_supported": [
+        "classification",
+        "regression",
+        "forecasting"
+      ],
+      "best_use_cases": "Tabular prediction with mixed data types; churn, credit risk, demand forecasting, uplift; medium-to-large datasets where accuracy and robustness matter.",
+      "data_requirements": "Tabular CSV/Excel; handles numeric and categorical features; missing values tolerated; benefits from sensible scaling of numeric features and ordinal/time encoding for forecasting.",
+      "strengths": "High predictive accuracy; robust to outliers and mixed feature types; handles non-linearities and interactions; good generalization with proper regularization.",
+      "weaknesses": "Slower training than linear models; more hyperparameters to tune; can overfit on small/noisy data; less suited for pure unsupervised tasks.",
+      "explainability_method": "SHAP (TreeSHAP), feature importance, partial dependence plots"
+    },
+    {
+      "model_name": "RandomForest",
+      "task_types_supported": [
+        "classification",
+        "regression"
+      ],
+      "best_use_cases": "Stable baseline for tabular classification/regression; noisy or high-cardinality categorical data; quick prototyping and robustness checks.",
+      "data_requirements": "Tabular CSV/Excel; numeric and categorical features; handles missing values via imputation; little to no scaling required.",
+      "strengths": "Robust to noise and overfitting via bagging; parallelizable training; provides reliable feature importances; works well out-of-the-box.",
+      "weaknesses": "Larger model size and memory footprint; can be biased toward high-cardinality categorical features; less accurate than tuned gradient boosting on many tasks.",
+      "explainability_method": "Permutation importance, SHAP (TreeSHAP), feature importance"
+    },
+    {
+      "model_name": "LogisticRegression",
+      "task_types_supported": [
+        "classification",
+        "factor_analysis"
+      ],
+      "best_use_cases": "Interpretable risk scoring, propensity modeling, survey response prediction; settings requiring coefficient-level explanations and statistical inference.",
+      "data_requirements": "Tabular CSV/Excel; numeric features preferred or properly encoded categoricals; benefits from scaling and handling multicollinearity; missing values should be imputed.",
+      "strengths": "Highly interpretable coefficients; fast training and inference; probabilistic outputs; strong baseline and regularization options (L1/L2).",
+      "weaknesses": "Limited to linear decision boundaries; performance can lag on complex non-linear patterns; sensitive to feature scaling and collinearity.",
+      "explainability_method": "Coefficient analysis, odds ratios, standardized coefficients, partial dependence"
+    },
+    {
+      "model_name": "LinearRegression",
+      "task_types_supported": [
+        "regression",
+        "factor_analysis"
+      ],
+      "best_use_cases": "Continuous outcome modeling with interpretability; pricing, forecasting with linear trends, causal factor analysis in surveys/operations.",
+      "data_requirements": "Tabular CSV/Excel; numeric features; scaling recommended; handle multicollinearity and outliers; missing values should be addressed.",
+      "strengths": "Transparent, fast, and well-understood; provides confidence intervals and p-values for inference; simple to deploy and audit.",
+      "weaknesses": "Assumes linearity and homoscedasticity; sensitive to outliers and collinearity; poor fit for complex non-linear relationships.",
+      "explainability_method": "Coefficient analysis, standardized coefficients, residual diagnostics, partial dependence"
+    },
+    {
+      "model_name": "XGBoost",
+      "task_types_supported": [
+        "classification",
+        "regression",
+        "forecasting"
+      ],
+      "best_use_cases": "High-performance tabular prediction; competitions and production systems needing accuracy and regularization; churn, LTV, demand/sales forecasting.",
+      "data_requirements": "Tabular CSV/Excel; numeric and encoded categorical features; handles missing values natively; time-aware splits required for forecasting.",
+      "strengths": "State-of-the-art accuracy with regularization; efficient handling of missing values; scalable with tree pruning and weighted quantile sketch.",
+      "weaknesses": "More tuning complexity; can overfit without careful regularization; higher memory/CPU during training than simpler models.",
+      "explainability_method": "SHAP (TreeSHAP), feature importance, gain-based importance, partial dependence"
+    },
+    {
+      "model_name": "LightGBM",
+      "task_types_supported": [
+        "classification",
+        "regression",
+        "forecasting"
+      ],
+      "best_use_cases": "Large tabular datasets with speed and memory constraints; high-cardinality categoricals; real-time scoring pipelines; forecasting with many series.",
+      "data_requirements": "Tabular CSV/Excel; efficient with categoricals (native support); handles missing values; benefits from time-based validation for forecasting.",
+      "strengths": "Fast training and low memory usage; good accuracy; handles categoricals well; leaf-wise growth for deeper trees when beneficial.",
+      "weaknesses": "Can overfit on small datasets without tuning; leaf-wise growth may increase complexity; requires care with learning rate and num_leaves.",
+      "explainability_method": "SHAP (TreeSHAP), feature importance, partial dependence"
+    },
+    {
+      "model_name": "CatBoost",
+      "task_types_supported": [
+        "classification",
+        "regression",
+        "forecasting"
+      ],
+      "best_use_cases": "Datasets with many categorical features; minimal preprocessing pipelines; marketing response, churn, and price modeling with mixed data.",
+      "data_requirements": "Tabular CSV/Excel; native handling of categoricals; handles missing values; time-aware splits for forecasting; prefers ordered boosting to reduce overfit.",
+      "strengths": "Strong out-of-the-box performance with categoricals; reduces target leakage via ordered boosting; robust to default parameters.",
+      "weaknesses": "Slower training than LightGBM on very large data; larger model size; may require more memory.",
+      "explainability_method": "SHAP (TreeSHAP), feature importance, object importance, partial dependence"
+    },
+    {
+      "model_name": "KMeans",
+      "task_types_supported": [
+        "clustering"
+      ],
+      "best_use_cases": "Customer segmentation, operational grouping, survey response clustering; exploratory profiling and cohort creation.",
+      "data_requirements": "Tabular CSV/Excel; numeric features scaled appropriately; choose k and distance metric; sensitive to outliers and scale.",
+      "strengths": "Simple, fast, and scalable; easy to implement and interpret clusters via centroids; widely supported in tooling.",
+      "weaknesses": "Assumes spherical clusters and equal variance; sensitive to initialization and outliers; requires pre-specifying k.",
+      "explainability_method": "Cluster centroids, silhouette analysis, PCA/t-SNE projection, feature contributions to centroids"
+    },
+    {
+      "model_name": "DBSCAN",
+      "task_types_supported": [
+        "clustering"
+      ],
+      "best_use_cases": "Anomaly/outlier detection and density-based segmentation; operational logs, survey open-ended behavior clusters with variable density.",
+      "data_requirements": "Tabular CSV/Excel; numeric features; careful choice of eps and min_samples; scaling strongly affects results.",
+      "strengths": "Finds arbitrary-shaped clusters; robust to outliers/noise; does not require specifying number of clusters.",
+      "weaknesses": "Sensitive to eps and min_samples; struggles with varying densities; high-dimensional data degrades distance metrics.",
+      "explainability_method": "Cluster membership, core/boundary/noise labels, reachability plots, PCA/t-SNE visualization"
+    },
+    {
+      "model_name": "HierarchicalClustering",
+      "task_types_supported": [
+        "clustering"
+      ],
+      "best_use_cases": "Survey and taxonomy building; nested segmentation; dendrogram-driven decisions in education/business cohorts.",
+      "data_requirements": "Tabular CSV/Excel; numeric features; linkage and distance metric selection; scaling recommended; can be memory-intensive.",
+      "strengths": "Produces dendrogram for multi-level interpretation; no need to pre-specify k; intuitive for nested groupings.",
+      "weaknesses": "Computationally heavy for large datasets; sensitive to noise and scale; merging decisions are global (depending on linkage).",
+      "explainability_method": "Dendrogram, cophenetic correlation, cluster cuts at chosen height, feature contributions via aggregated cluster stats"
+    },
+    {
+      "model_name": "GaussianMixture",
+      "task_types_supported": [
+        "clustering"
+      ],
+      "best_use_cases": "Soft clustering and probabilistic segment assignment; survey latent classes; operational states with uncertainty estimates.",
+      "data_requirements": "Tabular CSV/Excel; numeric features; assumes approximate Gaussian clusters; scaling recommended; choose number of components.",
+      "strengths": "Provides cluster probabilities; flexible covariance structures; principled model selection via BIC/AIC.",
+      "weaknesses": "Assumes Gaussian-like clusters; sensitive to initialization; can struggle with non-elliptical shapes.",
+      "explainability_method": "Component means/covariances, posterior probabilities, BIC/AIC, visualization via PCA/t-SNE"
+    },
+    {
+      "model_name": "ARIMA",
+      "task_types_supported": [
+        "forecasting"
+      ],
+      "best_use_cases": "Univariate time series with trend/seasonality; demand, enrollment, revenue forecasting; classical econometric settings.",
+      "data_requirements": "Regular time index; numeric target; stationarity or differencing applied; exogenous variables optional (ARIMAX).",
+      "strengths": "Well-understood statistical foundation; provides confidence intervals; interpretable parameters (AR/MA terms).",
+      "weaknesses": "Primarily univariate and linear; manual parameter selection can be tedious; less flexible for complex multivariate patterns.",
+      "explainability_method": "Parameter estimates, residual diagnostics, ACF/PACF plots, forecast decomposition"
+    },
+    {
+      "model_name": "Prophet",
+      "task_types_supported": [
+        "forecasting"
+      ],
+      "best_use_cases": "Business time series with strong seasonality/holidays; sales, enrollment, operations forecasting with interpretable components.",
+      "data_requirements": "Tabular CSV/Excel with ds (datetime) and y (numeric); optional regressors; handles missing dates and outliers gracefully.",
+      "strengths": "Automatic seasonality/holiday modeling; robust to missing data and outliers; interpretable trend/seasonality components.",
+      "weaknesses": "Additive model by default; may underfit complex non-linear interactions; primarily univariate with optional regressors.",
+      "explainability_method": "Component plots (trend, seasonality, holidays), changepoints, regressor coefficients, cross-validation performance"
+    },
+    {
+      "model_name": "SARIMA",
+      "task_types_supported": [
+        "forecasting"
+      ],
+      "best_use_cases": "Seasonal univariate time series; periodic education/business cycles; inventory, staffing, and enrollment forecasts.",
+      "data_requirements": "Regular time index; numeric target; seasonal period specified; stationarity or differencing (including seasonal differencing).",
+      "strengths": "Explicit seasonal modeling; statistical rigor and confidence intervals; interpretable seasonal AR/MA terms.",
+      "weaknesses": "Parameter space larger and more complex; primarily univariate; manual tuning can be time-consuming.",
+      "explainability_method": "Parameter estimates, residual diagnostics, seasonal decomposition, ACF/PACF plots"
+    },
+    {
+      "model_name": "FactorAnalysis",
+      "task_types_supported": [
+        "factor_analysis"
+      ],
+      "best_use_cases": "Survey and assessment dimensionality reduction; latent trait extraction; feature grouping and multicollinearity reduction.",
+      "data_requirements": "Tabular CSV/Excel; numeric indicators; sufficient sample size; scaling recommended; choose number of factors.",
+      "strengths": "Explicit latent factor model; provides loadings and communalities; useful for questionnaire design and construct validation.",
+      "weaknesses": "Assumes linear relationships and Gaussian factors; rotation choices affect interpretation; requires care in selecting factor count.",
+      "explainability_method": "Factor loadings, scree plots, variance explained, rotation matrices (varimax/promax), correlation with factors"
+    },
+    {
+      "model_name": "PCA",
+      "task_types_supported": [
+        "factor_analysis"
+      ],
+      "best_use_cases": "Dimensionality reduction and decorrelation; preprocessing for modeling; survey/assessment item compression.",
+      "data_requirements": "Tabular CSV/Excel; numeric features; scaling essential; choose number of components or variance threshold.",
+      "strengths": "Fast and deterministic; orthogonal components; clear variance-based selection; widely applicable.",
+      "weaknesses": "Linear only; components may be hard to interpret in original features; does not model latent constructs explicitly like factor analysis.",
+      "explainability_method": "Component loadings, explained variance ratios, biplots, correlation with original features"
+    }
+  ]
+}
